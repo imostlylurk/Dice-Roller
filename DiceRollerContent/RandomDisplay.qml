@@ -23,12 +23,13 @@ Frame {
     Label {
         anchors.fill: parent
 
-        text: root.isCoin ? (root.randomNum === 1 ? "Heads" : "Tail") : root.randomNum
+        // Choos Heads/Tails if it's a coin
+        text: root.isCoin ? (root.randomNum === 1 ? "Heads" : "Tails") : root.randomNum
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
 
         color: Theme.text
         font.weight: Font.DemiBold
-        font.pointSize: parent.height * (root.isCoin ? 0.14 : 0.16) // for the heads and tail to appear smaller
+        font.pointSize: parent.height * (root.isCoin ? 0.14 : 0.16) // for the heads and tails to appear smaller
     }
 }

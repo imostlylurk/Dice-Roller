@@ -6,6 +6,8 @@ import QtCore
 QtObject {
     id: root
 
+    // These could've been inside a single list or something. But readonly properties doesn't really hurt performance.
+
     // Light
     readonly property color lightBackground: "#CDCDCD"
     readonly property color lightText: "#282828"
@@ -30,8 +32,10 @@ QtObject {
     readonly property color oblackBackground: "#000000"
     readonly property color oblackText: "#FFFFFF"
     readonly property real oblackBorderOpacity: 0.20
+
     readonly property real borderWidth: 2
 
+    // Values to be used and their defaults
     property int currentTheme: Theme.Light
     property string currentThemeIcon: icon("sun-filled")
     property color background: lightBackground
@@ -53,9 +57,6 @@ QtObject {
     }
 
     function setTheme(val: real) {
-        // if (currentTheme === val)
-        //     return
-
         switch(val) {
         case Theme.Light:
             setColors(lightBackground, lightText, Qt.alpha(lightText, lightBorderOpacity))
@@ -89,6 +90,7 @@ QtObject {
         border = brdr
     }
 
+    // Settings instance responsible for storing theme related settings
     property Settings themeSettings : Settings {
         category: "Configurations"
 
@@ -99,9 +101,7 @@ QtObject {
         property alias crntThemeIcon: root.currentThemeIcon
     }
 
-    ////////////////////////
-    // Icons
-    ////////////////////////
+    // Function providing icons. Although it might not be used through out the code, because .ui.qml files doesn't really work with JS functions
     function icon(name)
     {
         return Qt.resolvedUrl("../DiceRollerContent/images/icons/" + name + ".svg")

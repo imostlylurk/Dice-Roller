@@ -9,7 +9,6 @@ qt6_add_qml_module(DiceRollerContent
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
-        "Example.qml"
         "DiceButton.qml"
         "OptionButton.qml"
         "TotalDisplay.qml"

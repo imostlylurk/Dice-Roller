@@ -22,32 +22,24 @@ int main(int argc, char *argv[])
     set_qt_environment();
     QGuiApplication app(argc, argv);
 
+    // These are needed for QSettings to properly work and save the configurations.
     QCoreApplication::setOrganizationName("DiceRoller");
     QCoreApplication::setOrganizationDomain("diceroller.com");
 
     QQmlApplicationEngine engine;
 
 #ifdef Q_OS_ANDROID
+    // JNI communicator class, being exposed through contextProperty.
+    // Everything being singleton doesn't look good.
     AndroidJNI jni;
     engine.rootContext()->setContextProperty("androidJNI", &jni);
 #endif
 
+    // Just a utility class, although it could've been named better.
     DiceRoller diceRoller;
     engine.rootContext()->setContextProperty("diceUtilities", &diceRoller);
 
-
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-
-    // This class is kinda underdevelopement. It is supposed to provide methods for DPI scaling
-    // qmlRegisterSingletonType<ScaleUI>(
-    //     "ScaleUI",
-    //     1, 0,
-    //     "ScaleUI",
-    //     [](QQmlEngine *, QJSEngine *) -> QObject*
-    //     {
-    //         return new ScaleUI();
-    //     });
-
+    // Normal template code a Qt Quick App.
     const QUrl url(mainQmlFile);
     QObject::connect(
                 &engine, &QQmlApplicationEngine::objectCreated, &app,
@@ -65,18 +57,3 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
-
-/*
-    Issues to solve
-
-    -.... Android specific code
-    - Permission request before vibrate
-    - DPI problem
-    -.... Coin
-    -.... Vibration option
-    -.... C++ randomizer
-    - Saving settings (Android)
-    -... Correct icons and logo
-    - Comments
-    - AutoExclusive Dice buttons
-*/

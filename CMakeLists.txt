@@ -20,7 +20,7 @@ find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Qml Quick)
 qt_standard_project_setup()
 
 qt_policy(SET QTP0001 NEW) # Use ':/qt/qml/' as the default resource prefix
-qt_policy(SET QTP0002 NEW) #Target properties that specify android-specific paths may contain generator expressions but they must evaluate to valid JSON string
+qt_policy(SET QTP0002 NEW) # For: Target properties that specify android-specific paths may contain generator expressions but they must evaluate to valid JSON string
 qt_policy(SET QTP0004 NEW) # Require 'qmldir' files for QML directories
 
 qt_add_executable(${CMAKE_PROJECT_NAME})
@@ -37,12 +37,14 @@ if(ANDROID)
         ${CMAKE_CURRENT_SOURCE_DIR}/android/
     )
 
-    # target_sources(hangman PRIVATE
-    #     purchasing/android/androidinappproduct.cpp purchasing/android/androidinappproduct.h
-    #     purchasing/android/androidinapppurchasebackend.cpp purchasing/android/androidinapppurchasebackend.h
-    #     purchasing/android/androidinapptransaction.cpp purchasing/android/androidinapptransaction.h
-    #     purchasing/android/androidjni.cpp
-    # )
+    # Maybe target_sources will include this anyway. But who cares, bro?
+    include_directories(SYSTEM
+        ${CMAKE_SOURCE_DIR}/android/src
+    )
+
+    target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+        "${CMAKE_SOURCE_DIR}/android/src/AndroidJNI.h"
+    )
 endif()
 
 if (BUILD_QDS_COMPONENTS)

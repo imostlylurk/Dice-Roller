@@ -15,7 +15,10 @@ RoundButton {
 
         radius: control.radius
         border {
-            color: control.checked ? Qt.alpha(Theme.border, 0.70) : (control.pressed ? Qt.alpha(Theme.border, 0.10) : Theme.border)
+
+            // Some extra checks, just for the vibration button
+            color: control.checked ? Qt.alpha(Theme.border, 0.70)
+                                   : (control.pressed ? Qt.alpha(Theme.border, 0.10) : Theme.border)
             width: Theme.borderWidth
         }
     }

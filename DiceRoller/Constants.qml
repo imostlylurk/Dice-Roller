@@ -1,3 +1,7 @@
+/*
+    This file is part of the QDS auto generated template and is left in case this app is expected to expand.
+*/
+
 pragma Singleton
 import QtQuick
 import QtQuick.Studio.Application

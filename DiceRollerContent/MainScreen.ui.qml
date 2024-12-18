@@ -31,6 +31,8 @@ Rectangle {
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 
             radius: 10
+
+            // If range is 1-2, means Coin
             isCoin: randomTimer.currentRange === 2
             randomNum: root.currentRandomNum
         }
@@ -86,19 +88,22 @@ Rectangle {
                     font.pointSize: 16
                     isCurrent: diceButtons.currentPressed === model.index
 
-                    // font.weight: Font.DemiBold
                     Connections {
                         target: dbutton
 
                         onPressed: {
+
+                            // Some of these are part of the exclusiveness.
+                            // If currentPressed is -1, means no button is pressed yet.
                             if (diceButtons.currentPressed !== -1)
                                 return
-
                             diceButtons.currentPressed = model.index
 
+                            // Set the range and start randomizing valuess
                             randomTimer.currentRange = modelData.range
                             randomTimer.start()
 
+                            // Only vibrate if it's Android. Otherwise throw error, due to Android code in main not being compiled.
                             if (Qt.platform.os === "android"
                                     && totalDisplay.vibrate)
                                 androidJNI.vibrate(50)
@@ -109,9 +114,13 @@ Rectangle {
                             if (!dbutton.isCurrent)
                                 return
 
+                            // Stop the timer and add the total value
                             randomTimer.stop()
-                            totalDisplay.total += currentRandomNum
+                            // If it's range 1-2 (Coin flip), don't add it
+                            if (randomTimer.currentRange !== 2)
+                                totalDisplay.total += currentRandomNum
 
+                            // Reset the exclusive state
                             diceButtons.currentPressed = -1
                         }
 
@@ -141,7 +150,7 @@ Rectangle {
             Connections {
                 target: randomTimer
                 onTriggered: {
-
+                    // This won't work in QDS, because it's C++ code.
                     root.currentRandomNum = diceUtilities.roleDice(
                                 randomTimer.currentRange)
                     // root.currentRandomNum = Math.floor(

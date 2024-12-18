@@ -2,7 +2,8 @@
 #include <ctime>
 
 DiceRoller::DiceRoller(QObject *parent)
-    : QObject{parent}, generator(std::time(nullptr))
+    : QObject{parent},
+    generator(std::time(nullptr)) // Seeding the mt19937 with current time.
 {}
 
 int DiceRoller::roleDice(int max, int min)

@@ -4,6 +4,7 @@
 #include <QQmlEngine>
 #include <random>
 
+// A Utility class
 class DiceRoller : public QObject
 {
     Q_OBJECT
@@ -14,7 +15,7 @@ public:
     Q_INVOKABLE int roleDice(int max, int min = 1);
 
 private:
-    // A static Mersenne Twister engine, PRNG (Psuedo Random Number Generator), for better rand generation.
+    // A Mersenne Twister engine, PRNG (Psuedo Random Number Generator), for better rand generation.
     // Will be seeded with current time.
     std::mt19937 generator;
 };

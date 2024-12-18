@@ -28,6 +28,7 @@ Frame {
         anchors.fill: parent
         spacing: 10
 
+        // Total Display
         Label {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
@@ -42,9 +43,9 @@ Frame {
             font.pointSize: parent.height * 0.12 // around 39
         }
 
-        property real buttonSize: height * 0.35 // 0.42 // 40 of 96 (height)
+        property real buttonSize: height * 0.35 // 40 of 96 (height)
 
-        // Increment -------------------------
+        // Increment Button
         OptionButton {
             id: incrementbutton
 
@@ -66,7 +67,7 @@ Frame {
 
             onReleased: {
                 timer.stop()
-                timer.interval = 100
+                timer.interval = 100 // Reset the interval
             }
 
             onCanceled: {
@@ -105,10 +106,11 @@ Frame {
             }
         }
 
+        // A Shared Timer for both increment/decrement
         Timer {
             id: timer
 
-            // Just a simple tag to distinguish the usage
+            // Simple flag to distinguish the usage
             property bool shouldIncrement: true
 
             interval: 100 // Update interval in milliseconds
@@ -121,7 +123,7 @@ Frame {
                 else if (root.total > 0)
                     root.total--
 
-                // Increase the speed over time
+                // Increase the timer speed over time
                 if (interval > 50)
                     interval--
             }
@@ -149,7 +151,7 @@ Frame {
             Layout.preferredHeight: parent.buttonSize
             Layout.preferredWidth: parent.buttonSize
 
-            // All this long ah thing due to the SolarizedDark icon's stretching too much, vertically.
+            // All this long ah thing because SolarizedDark's icon is stretching too much, vertically.
             icon.height: Theme.currentTheme === Theme.SolarizedLight ? parent.buttonSize * 0.6 : parent.buttonSize * 0.52 // 20 of 40
             icon.width: parent.buttonSize * 0.52
             icon.source: Theme.currentThemeIcon
@@ -169,13 +171,10 @@ Frame {
             icon.height: parent.buttonSize * 0.6 // 24 of 40
             icon.width: parent.buttonSize * 0.6
             icon.source: "images/icons/vibration"
-            // icon.color: vibrateButton.checked ? Qt.alpha(Theme.text, 0.50) : Theme.text
-
-            onClicked: {
-                console.log("Vibrate", vibrateButton.checked)
-            }
         }
 
+        // Settings responsible for vibration state. Couldn't place both Theme and Vibration at the same place
+        // but they both are part of the same category, different file name.
         Settings {
             id: totalDisplaySettings
 
