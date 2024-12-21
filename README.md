@@ -19,6 +19,8 @@ To build the project, you will need:
 - **Android Development Enviroment** (described later)
 - **An AVD or a Physical Device** 
 
+This project was built and tested using **Qt 6.8.1**.
+
 ---
 
 ## 📱 Setting Up an AVD in Qt Creator
