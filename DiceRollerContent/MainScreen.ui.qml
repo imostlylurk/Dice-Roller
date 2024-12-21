@@ -26,6 +26,7 @@ Rectangle {
 
         // Random Display
         RandomDisplay {
+            id: randomDisplay
             Layout.fillWidth: true
             Layout.preferredHeight: parent.height * 0.167 // 130.2 of 780
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -80,16 +81,28 @@ Rectangle {
 
                 delegate: DiceButton {
                     id: dbutton
+
                     Layout.fillHeight: true
                     Layout.fillWidth: true
 
                     text: modelData.label
                     radius: 10
-                    font.pointSize: 16
                     isCurrent: diceButtons.currentPressed === model.index
+                    font.pointSize: 16
 
                     Connections {
                         target: dbutton
+
+                        Component.onCompleted: {
+                            if (modelData.range === 2) {
+                                // If is coin
+                                dbutton.icon.source = "images/icons/coin-icon"
+                                dbutton.icon.height = dbutton.height * 0.80
+                                dbutton.icon.width = dbutton.height * 0.80
+                                dbutton.padding = 0
+                                dbutton.display = RoundButton.IconOnly
+                            }
+                        }
 
                         onPressed: {
 
@@ -122,6 +135,7 @@ Rectangle {
 
                             // Reset the exclusive state
                             diceButtons.currentPressed = -1
+                            randomTimer.interval = 50
                         }
 
                         // For a weird behavior I noticed (not a bug though), when you hold and
@@ -150,11 +164,26 @@ Rectangle {
             Connections {
                 target: randomTimer
                 onTriggered: {
+
+                    // We're using incrementation here, as random numbers sometimes can be same, stopping the spin.
+                    // See RandomDisplay.qml
+                    if (randomDisplay.isCoin)
+                        root.currentRandomNum++
+                    else
+                        root.currentRandomNum = randNum()
+
+                    if (randomTimer.interval > 40)
+                        randomTimer.interval--
+                }
+
+                function randNum() {
+                    // Uncomment this if you're in QDS, otherwise the other
+                    // return Math.floor(Math.random(
+                    //                       ) * randomTimer.currentRange) + 1
+
                     // This won't work in QDS, because it's C++ code.
-                    root.currentRandomNum = diceUtilities.roleDice(
+                    return root.currentRandomNum = diceUtilities.roleDice(
                                 randomTimer.currentRange)
-                    // root.currentRandomNum = Math.floor(
-                    //             Math.random() * randomTimer.currentRange) + 1
                 }
             }
         }

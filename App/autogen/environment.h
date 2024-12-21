@@ -6,8 +6,8 @@
 #include <QGuiApplication>
 #include "qqmlextensionplugin.h"
 
-Q_IMPORT_QML_PLUGIN(DiceRollerPlugin)
 Q_IMPORT_QML_PLUGIN(DiceRollerContentPlugin)
+Q_IMPORT_QML_PLUGIN(DiceRollerPlugin)
 
 const char mainQmlFile[] = "qrc:/qt/qml/DiceRollerContent/App.qml";
 

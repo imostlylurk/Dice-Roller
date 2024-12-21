@@ -9,24 +9,27 @@ qt6_add_qml_module(DiceRollerContent
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
-        "DiceButton.qml"
-        "OptionButton.qml"
-        "TotalDisplay.qml"
-        "App.qml"
-        "MainScreen.ui.qml"
         "RandomDisplay.qml"
+        "TotalDisplay.qml"
+        "OptionButton.qml"
+        "MainScreen.ui.qml"
+        "App.qml"
+        "DiceButton.qml"
+        "SpinnableCoin.qml"
     RESOURCES
-        "images/icons/subtract.svg"
-        "images/icons/moon.svg"
-        "images/icons/sun-filled.svg"
         "images/icons/vibration.png"
+        "images/icons/subtract.svg"
         "images/icons/solarized-dark.svg"
-        "images/icons/coin.png"
-        "images/icons/solarized-light.svg"
+        "images/icons/coin-icon.svg"
+        "images/icons/sun-filled.svg"
+        "images/icons/moon.svg"
+        "images/icons/coin-tails.svg"
         "images/icons/oled-black.svg"
+        "images/icons/solarized-light.svg"
         "images/icons/reset.svg"
         "images/icons/add.svg"
         "images/icons/sun.svg"
+        "images/icons/coin-heads.svg"
 )
 
 
